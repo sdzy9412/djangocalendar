@@ -16,6 +16,10 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <button class="signup" type="submit">Sign up</button>
   </form>
+<div class="signin">
+  already have account?
+  <input type="button" onclick="location.href='/signin';" value="SignIn" />
+</div>
 {% endblock %}
