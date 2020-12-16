@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q
 
 
 
@@ -100,12 +101,10 @@ def add_eventmember(request, event_id):
             # member = EventMember.objects.filter(event=event_id)
             event = Event.objects.get(id=event_id)
             user = forms.cleaned_data['user']
-            # context = False
-            if EventMember.objects.filter(user=user):
-                print("here for event memebers!")
-                messages.success(request, 'Changes unsuccessfully saved.')
-                # context = True
-                # return render(request, 'calendar.html', {'context':True})
+            user_id = request.POST['user']
+
+            if EventMember.objects.filter(Q(user_id=user_id) & Q(event_id=event_id)):
+                messages.success(request, 'Dupilicated user: Changes unsuccessfully saved.')
                 return redirect('calendarapp:calendar')
             else:
                 EventMember.objects.create(
@@ -113,6 +112,7 @@ def add_eventmember(request, event_id):
                     user=user
                 )
                 return redirect('calendarapp:calendar')
+            # except:
 
     context = {
         'form': forms
@@ -121,5 +121,10 @@ def add_eventmember(request, event_id):
 
 class EventMemberDeleteView(generic.DeleteView):
     model = EventMember
+    template_name = 'member_delete.html'
+    success_url = reverse_lazy('calendarapp:calendar')
+
+class EventDeleteView(generic.DeleteView):
+    model = Event
     template_name = 'event_delete.html'
     success_url = reverse_lazy('calendarapp:calendar')
