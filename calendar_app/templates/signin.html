@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} signin {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6  m-2">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-primary mt-2" type="submit" value="signin">
+        </form>
+    </div>
+</div>
+<div class="signup">
+  new user?
+  <input type="button" onclick="location.href='/signup';" value="SignUp" />
+</div>
+{% endblock %}

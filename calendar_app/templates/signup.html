@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %} Signup {% endblock %}
-
 {% block content %}
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6  m-2">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn btn-primary mt-2" type="submit" value="Signup">
-        </form>
-    </div>
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button class="signup" type="submit">Sign up</button>
+  </form>
+<div class="signin">
+  already have account?
+  <input type="button" onclick="location.href='/signin';" value="SignIn" />
 </div>
 {% endblock %}
