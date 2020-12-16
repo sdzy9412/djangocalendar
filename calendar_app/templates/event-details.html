@@ -8,6 +8,7 @@ Event Details
     <div class="container">
         <div class="clearfix">
             <a class="btn btn-primary left" href="{% url 'calendarapp:calendar' %}"> Calendar </a>
+            <a class="btn btn-info right mr-1" href="{% url 'calendarapp:event_delete' event.id%}"> Delete Event </a>
             <a class="btn btn-info right mr-2" href="{% url 'calendarapp:event_edit' event.pk %}"> Edit Event </a>
         </div>
         
@@ -40,7 +41,7 @@ Event Details
                     <td>{{ member.user.username }}</td>
                     <td>{{ member.user.email }}</td>
                     <td>
-                        <a class="btn btn-danger" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a>
+                        <a class="btn btn-danger" href="{% url 'calendarapp:remove_member' member.id %}">Remove</a>
                     </td>
                 </tr>
                 {% endfor %}
