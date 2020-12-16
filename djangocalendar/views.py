@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from calendar_app.forms import signInForm
 from django.contrib.auth.forms import UserCreationForm
 

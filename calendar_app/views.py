@@ -1,4 +1,3 @@
-# cal/views.py
 
 from datetime import datetime, date
 from django.shortcuts import render, redirect
@@ -7,7 +6,6 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from datetime import timedelta
 import calendar
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -96,7 +94,6 @@ def add_eventmember(request, event_id):
     forms = AddMemberForm()
     if request.method == 'POST':
         forms = AddMemberForm(request.POST)
-        print("request.POST: ",request.POST)
         if forms.is_valid():
             # member = EventMember.objects.filter(event=event_id)
             event = Event.objects.get(id=event_id)
