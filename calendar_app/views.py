@@ -19,7 +19,7 @@ from .models import *
 from .utils import Calendar
 from .forms import EventForm, AddMemberForm
 
-@login_required(login_url='signup')
+@login_required(login_url='')
 def index(request):
     return HttpResponse('hello')
 
@@ -43,7 +43,7 @@ def next_month(d):
     return month
 
 class CalendarView(LoginRequiredMixin, generic.ListView):
-    login_url = 'signup'
+    login_url = 'signin'
     model = Event
     template_name = 'calendar.html'
 
@@ -57,7 +57,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         context['next_month'] = next_month(d)
         return context
 
-@login_required(login_url='signup')
+@login_required(login_url='signin')
 def create_event(request):    
     form = EventForm(request.POST or None)
     if request.POST and form.is_valid():
@@ -80,7 +80,7 @@ class EventEdit(generic.UpdateView):
     fields = ['title', 'description', 'start_time', 'end_time']
     template_name = 'event.html'
 
-@login_required(login_url='signup')
+@login_required(login_url='signin')
 def event_details(request, event_id):
     event = Event.objects.get(id=event_id)
     eventmember = EventMember.objects.filter(event=event)
