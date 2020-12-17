@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/details.css' %}">
+{% endblock %}
 
 {% block title %}
 Event Details
@@ -8,6 +12,7 @@ Event Details
     <div class="container">
         <div class="clearfix">
             <a class="btn btn-primary left" href="{% url 'calendarapp:calendar' %}"> Calendar </a>
+            <a class="cal-logout btn btn-info right" href="{% url 'logout' %}"> Logout </a>
             <a class="btn btn-info right mr-1" href="{% url 'calendarapp:event_delete' event.id%}"> Delete Event </a>
             <a class="btn btn-info right mr-2" href="{% url 'calendarapp:event_edit' event.pk %}"> Edit Event </a>
         </div>
@@ -25,8 +30,8 @@ Event Details
         </div>
         <table class="table table-bordered">
             <thead>                  
-                <tr>
-                  <th style="width: 10px">#</th>
+                <tr class="table100-head">
+                  <th style="width: 10px"> </th>
                   <th>Name</th>
                   <th>Username</th>
                   <th>Email</th>
