@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
 
 {% block content %}
 <div class="clearfix">
     <span class="left m-2" style="font-size: 20px;">Wellcome, {{ request.user }}</span>
-    <a class="btn btn-info right" href="{% url 'logout' %}"> Logout </a>
-	<a class="btn btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ next_month }} "> Next Month >> </a>
-    <a class="btn btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ prev_month }}"> << Previous Month </a>
-    <a class="btn btn-info right mr-2" href="{% url 'calendarapp:event_new' %}"> + New Event </a>
+    <a class="cal-logout btn btn-info right" href="{% url 'logout' %}"> Logout </a>
+	<a class="cal-prev btn btn-default btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ next_month }} ">  >> </a>
+    <a class="cal-next btn btn-default  btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ prev_month }}"> <<  </a>
+    <a class="cal-new btn btn-default btn-info right mr-2" href="{% url 'calendarapp:event_new' %}"> + New Event </a>
 </div>
 
 {% if messages %}
@@ -15,7 +18,8 @@
     {% endfor %}
 {% endif %}
 
-<div style="color: blueviolet;">
+<div>
+<!--    <div style="color: blueviolet;">-->
     {{ calendar }}
 </div>
 

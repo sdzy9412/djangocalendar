@@ -1,25 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+{% endblock %}
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button class="signup" type="submit">Sign up</button>
-  </form>
-<div class="signin">
-  already have account?
-  <input type="button" onclick="location.href='/signin';" value="SignIn" />
+<div class="container-fluid stylish-form">
+  <h2 class="text-center">Online Calendar</h2>
+  <div class="row mar20" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="inner-section">
+
+      <form method="post">
+        <div class="mar20 inside-form">
+          <h2 class="font_white text-center">Sign up</h2>
+          {% csrf_token %}
+          {% for field in form %}
+            <p class="input-group">
+               <div class="form-control" >
+                  {{ field.label_tag }}<br>
+                  {{ field }}
+               </div>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </p>
+          {% endfor %}
+              <div class="footer text-center">
+              <button class="btn btn-neutral btn-round btn-lg" type="submit">Sign up</button>
+              </div>
+              <div class="d-flex justify-content-center links">
+                already have account?<a href="/signin" class="ml-2">Sign In</a>
+              </div>
+          </div>
+      </form>
+
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
