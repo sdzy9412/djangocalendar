@@ -11,8 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db.models import Q
-
-
+from .utils import get_current_user
 
 from .models import *
 from .utils import Calendar
@@ -92,12 +91,14 @@ def event_details(request, event_id):
 
 def add_eventmember(request, event_id):
     forms = AddMemberForm()
+    _,current_user=get_current_user()
     if request.method == 'POST':
         forms = AddMemberForm(request.POST)
         if forms.is_valid():
             # member = EventMember.objects.filter(event=event_id)
             event = Event.objects.get(id=event_id)
             user = forms.cleaned_data['user']
+            print("here for user,",user)
             user_id = request.POST['user']
 
             if EventMember.objects.filter(Q(user_id=user_id) & Q(event_id=event_id)):
@@ -107,6 +108,10 @@ def add_eventmember(request, event_id):
                 EventMember.objects.create(
                     event=event,
                     user=user
+                )
+                EventMember.objects.create(
+                    event=event,
+                    user=current_user
                 )
                 return redirect('calendarapp:calendar')
             # except:
