@@ -5,43 +5,52 @@
     font-size: 13px;
     color: #30336b;/*修改整个日历的文本颜色，目前会影响“mon，tue...”*/
   }
-
-
+  
+  .calendar tr, .calendar td {
+   /* border: 1px solid black;*/
+  }
+  
   .calendar th {
+   /* padding: 10px;
+    text-align: center;
+    font-size: 18px;*/
     padding: .75rem;
     vertical-align: top;
-    border-top: 2.5px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
   }
-
+  
   .calendar td {
     width: 200px;
     height: 100px;
     padding: 20px 0px 0px 5px;
   }
-
+  
   .month {
-    text-align: center;
     font-size: 25px;
-    color: #6ab04c;/*“December 2020”*/
+    color: #6ab04c;/*修改日历标题的文本颜色，目前会影响“December 2020”*/
   }
-
+  
   .date {
     font-size: 16px;
+   /* color: #3c763d;*/
+    /*color: #9acfed;*/
+    /*background-color: #3c763d;*/
   }
-
+  
   ul {
     height: 100%;
     padding: 0px 5px 0px 20px;
   }
-/*
+  
   a {
+    /*color: #17a2b8;*/
     color: #17a2b8;
-  }*/
+  }
 
   .left {
     float: left;
   }
-
+  
   .right {
     float: right;
   }
@@ -63,23 +72,17 @@
 
   .form input, .form select, .form textarea {
     border-radius: 5px;
-    border: 1px solid #00b894;
+    border: 1px solid #17a2b8;
     outline: none;
     background: none;
     padding: 5px;
     width: 100%;
   }
-  a:link {
-    color: darkgreen;
-    background-color: transparent;
-    text-decoration: none;
-  }
-  a:visited {
-  color: grey;
-  background-color: transparent;
-  text-decoration: none;
-}
 
+  /*.date {
+    color: #ccc;
+  }*/
+/*
   .event {
     border-top: 1px solid #b2dba1;
     border-bottom: 1px solid #b2dba1;
@@ -105,11 +108,28 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-  .btn-info{
-    border: 0px solid black;
-    background-color: #bdc3c7;
-  }
-   cal-logout: hover {
-    background-color: darkgreen;
-    text-decoration: none;
-  }
+/*
+.calendar-day {
+  width: 200px;
+  min-width: 100px;
+  max-width: 200px;
+ /* height: 80px;
+}
+*/
+
+/*.calendar-table {
+  margin: 0 auto;
+  width: 98%;
+}*/
+
+/*
+.table-tight > tr > th,
+.table-tight >  tr > th,
+.table-tight >  tr > th,
+.table-tight >  tr > td,
+.table-tight >  tr > td,
+.table-tight > tr > td {
+  padding-left: 0;
+  padding-right: 0;
+}
+*/

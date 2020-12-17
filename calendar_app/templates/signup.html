@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+{% endblock %}
 {% block content %}
 <div class="container-fluid stylish-form">
   <h2 class="text-center">Online Calendar</h2>

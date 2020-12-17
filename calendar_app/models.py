@@ -19,7 +19,7 @@ class Event(models.Model):
     @property
     def get_html_url(self):
         url = reverse('calendarapp:event-detail', args=(self.id,))
-        return f'<a href="{url}"> {self.title} </a>'
+        return f'<a  style="text-decoration:none" href="{url}">{self.title} </a>'
 
 
 class EventMember(models.Model):
