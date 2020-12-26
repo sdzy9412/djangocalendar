@@ -4,18 +4,16 @@ from django.contrib.auth.models import User
 from calendar import HTMLCalendar
 from .models import Event, EventMember
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 
 
-def get_current_user():
+def get_current_userid():
 	active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
 	user_id_list = []
 	for session in active_sessions:
 		data = session.get_decoded()
 		user_id_list.append(data.get('_auth_user_id', None))
 	userid = user_id_list[-1]
-	user = get_object_or_404(User, id=userid)
-	return userid,user
+	return userid
 
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None):
@@ -30,7 +28,7 @@ class Calendar(HTMLCalendar):
 			eventid = eventmember[0].event_id
 		else:
 			eventid = 9999
-		userid,_=get_current_user()
+		userid=get_current_userid()
 		events_per_day = events.filter(Q(Q(start_time__day=day)) & Q(Q(id = eventid)| Q(user_id =userid)))
 		d = "<div>"
 		
@@ -52,7 +50,7 @@ class Calendar(HTMLCalendar):
 	# filter events by year and month
 	def formatmonth(self, withyear=True):
 		events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
-		userid,_=get_current_user()
+		userid=get_current_userid()
 		eventmember = EventMember.objects.filter(user_id=userid)
 		cal =f'<table border="0" cellpadding="0" cellspacing="0" class=" calendar calendar-table table table-condensed table-tight">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
