@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block content %}
@@ -10,6 +11,13 @@
 	<a class="cal-prev btn btn-default btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ next_month }} ">  >> </a>
     <a class="cal-next btn btn-default  btn-info right mr-2" href="{% url 'calendarapp:calendar' %}?{{ prev_month }}"> <<  </a>
     <a class="cal-new btn btn-default btn-info right mr-2" href="{% url 'calendarapp:event_new' %}"> + New Event </a>
+    <div class="search-container btn btn-info right">
+        <form action="/search-event" method="post">
+            {% csrf_token %}
+          <input type="text" placeholder="Search title.." name="title">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
 </div>
 
 {% if messages %}
@@ -19,7 +27,6 @@
 {% endif %}
 
 <div>
-<!--    <div style="color: blueviolet;">-->
     {{ calendar }}
 </div>
 

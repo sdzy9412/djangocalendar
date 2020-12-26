@@ -121,6 +121,25 @@ def add_eventmember(request, event_id):
     }
     return render(request, 'add_member.html', context)
 
+@login_required
+def searchEvent(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        user_id,_=get_current_user()
+        try:
+            event = Event.objects.get(user_id = user_id, title=title)
+            eventmember = EventMember.objects.filter(event=event)
+            context = {
+                 'event': event,
+                'eventmember': eventmember
+            }
+            return render(request, 'search-event.html', context)
+        except:
+            messages.success(request, 'Nothing to match.')
+            return redirect('calendarapp:calendar')
+    return redirect('calendarapp:calendar')
+
+
 class EventMemberDeleteView(generic.DeleteView):
     model = EventMember
     template_name = 'member_delete.html'
