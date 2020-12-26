@@ -27,7 +27,6 @@ class Calendar(HTMLCalendar):
 	# filter events by day
 	def formatday(self, day, events, eventmember):
 		if eventmember.exists():
-			# print("here in formatday: ",eventmember[0].event_id)
 			eventid = eventmember[0].event_id
 		else:
 			eventid = 9999

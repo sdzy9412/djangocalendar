@@ -98,7 +98,6 @@ def add_eventmember(request, event_id):
             # member = EventMember.objects.filter(event=event_id)
             event = Event.objects.get(id=event_id)
             user = forms.cleaned_data['user']
-            print("here for user,",user)
             user_id = request.POST['user']
 
             if EventMember.objects.filter(Q(user_id=user_id) & Q(event_id=event_id)):
