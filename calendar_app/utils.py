@@ -31,10 +31,8 @@ class Calendar(HTMLCalendar):
 				eventidlist.append(eventid)
 		else:
 			eventidlist = [9999]
-		# print("event id for current user:",eventid)
-		# print("test - eventmember[1].event_id: ",eventmembers[1].event_id)
+
 		userid=get_current_userid()
-		print("event id list: ",eventidlist)
 		events_per_day = set()
 		for eventid in eventidlist:
 			events_per_day.update(events.filter(Q(Q(start_time__day=day)) & Q(Q(id = eventid)| Q(user_id =userid))))
