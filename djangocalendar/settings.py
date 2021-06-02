@@ -25,8 +25,8 @@ SECRET_KEY = '7uro+9n@_nju@@2i2r=cf12oq5#g1(lv#hu((df!f*qqld(1y2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['52.19.30.6','ec2-52-19-30-6.eu-west-1.compute.amazonaws.com']
+# ALLOWED_HOSTS = [ ]
 
 # Application definition
 
@@ -81,6 +81,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'calendar',
+#         'USER': 'admin',
+#         'PASSWORD': 'asdf1234',
+#         'HOST': 'calendar.cx8vz93uf5cv.eu-west-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

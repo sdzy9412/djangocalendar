@@ -1,4 +1,3 @@
-# cal/views.py
 
 from datetime import datetime, date
 from django.shortcuts import render, redirect
@@ -7,19 +6,18 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from datetime import timedelta
 import calendar
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
-
-
+from django.db.models import Q
+from .utils import get_current_userid
 
 from .models import *
 from .utils import Calendar
 from .forms import EventForm, AddMemberForm
 
-@login_required(login_url='signup')
+@login_required(login_url='/signup/')
 def index(request):
     return HttpResponse('hello')
 
@@ -57,7 +55,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         context['next_month'] = next_month(d)
         return context
 
-@login_required(login_url='signup')
+@login_required(login_url='signin')
 def create_event(request):    
     form = EventForm(request.POST or None)
     if request.POST and form.is_valid():
@@ -93,33 +91,62 @@ def event_details(request, event_id):
 
 def add_eventmember(request, event_id):
     forms = AddMemberForm()
+    current_user = request.user
+    current_user_id=get_current_userid()
     if request.method == 'POST':
         forms = AddMemberForm(request.POST)
-        print("request.POST: ",request.POST)
         if forms.is_valid():
             # member = EventMember.objects.filter(event=event_id)
             event = Event.objects.get(id=event_id)
             user = forms.cleaned_data['user']
-            # context = False
-            if EventMember.objects.filter(user=user):
-                print("here for event memebers!")
-                messages.success(request, 'Changes unsuccessfully saved.')
-                # context = True
-                # return render(request, 'calendar.html', {'context':True})
+            user_id = request.POST['user']
+
+            if EventMember.objects.filter(Q(user_id=user_id) & Q(event_id=event_id)):
+                messages.success(request, 'Dupilicated user: Changes unsuccessfully saved.')
                 return redirect('calendarapp:calendar')
             else:
                 EventMember.objects.create(
                     event=event,
                     user=user
                 )
+                if not (EventMember.objects.filter(Q(user_id=current_user_id) & Q(event_id=event_id))):
+                    EventMember.objects.create(
+                        event=event,
+                        user=current_user
+                    )
                 return redirect('calendarapp:calendar')
+            # except:
 
     context = {
         'form': forms
     }
     return render(request, 'add_member.html', context)
 
+@login_required
+def searchEvent(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        user_id=get_current_userid()
+        try:
+            event = Event.objects.get(user_id = user_id, title=title)
+            eventmember = EventMember.objects.filter(event=event)
+            context = {
+                 'event': event,
+                'eventmember': eventmember
+            }
+            return render(request, 'search-event.html', context)
+        except:
+            messages.success(request, 'Nothing to match.')
+            return redirect('calendarapp:calendar')
+    return redirect('calendarapp:calendar')
+
+
 class EventMemberDeleteView(generic.DeleteView):
     model = EventMember
+    template_name = 'member_delete.html'
+    success_url = reverse_lazy('calendarapp:calendar')
+
+class EventDeleteView(generic.DeleteView):
+    model = Event
     template_name = 'event_delete.html'
     success_url = reverse_lazy('calendarapp:calendar')

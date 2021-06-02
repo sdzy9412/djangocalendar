@@ -1,16 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %} Signup {% endblock %}
-
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6  m-2">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn btn-primary mt-2" type="submit" value="Signup">
-        </form>
+<div class="container-fluid stylish-form">
+  <h2 class="text-center">Online Calendar</h2>
+  <div class="row mar20" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="inner-section">
+
+      <form method="post">
+        <div class="mar20 inside-form">
+          <h2 class="font_white text-center">Sign up</h2>
+          {% csrf_token %}
+          {% for field in form %}
+            <p class="input-group">
+               <div class="form-control" >
+                  {{ field.label_tag }}<br>
+                  {{ field }}
+               </div>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </p>
+          {% endfor %}
+              <div class="footer text-center">
+              <button class="btn btn-neutral btn-round btn-lg" type="submit">Sign up</button>
+              </div>
+              <div class="d-flex justify-content-center links">
+                already have account?<a href="/signin" class="ml-2">Sign In</a>
+              </div>
+          </div>
+      </form>
+
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
